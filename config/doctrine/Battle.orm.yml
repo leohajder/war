@@ -5,6 +5,10 @@ App\Entity\Battle:
             type: integer
             generator:
                 strategy: AUTO
+    oneToMany:
+        outcomes:
+            targetEntity: BattleOutcome
+            mappedBy: battle
     manyToOne:
         war:
             targetEntity: War
