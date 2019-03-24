@@ -1,0 +1,12 @@
+App\Entity\Army:
+    type: entity
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        tag:
+            type: string
+            length: 50
+            nullable: false
