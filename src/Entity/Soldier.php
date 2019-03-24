@@ -10,6 +10,8 @@ class Soldier
 
     private $alive;
 
+    private $army;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -35,6 +37,18 @@ class Soldier
     public function setAlive(bool $alive): self
     {
         $this->alive = $alive;
+
+        return $this;
+    }
+
+    public function getArmy(): ?Army
+    {
+        return $this->army;
+    }
+
+    public function setArmy(?Army $army): self
+    {
+        $this->army = $army;
 
         return $this;
     }
