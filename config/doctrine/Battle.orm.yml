@@ -1,0 +1,17 @@
+App\Entity\Battle:
+    type: entity
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    oneToMany:
+        outcomes:
+            targetEntity: BattleOutcome
+            mappedBy: battle
+    manyToOne:
+        war:
+            targetEntity: War
+            inversedBy: battles
+            joinColumn:
+                nullable: false

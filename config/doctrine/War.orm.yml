@@ -1,0 +1,14 @@
+App\Entity\War:
+    type: entity
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    oneToMany:
+        armies:
+                targetEntity: Army
+                mappedBy: war
+        battles:
+            targetEntity: Battle
+            mappedBy: war

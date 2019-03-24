@@ -1,0 +1,24 @@
+App\Entity\BattleOutcome:
+    type: entity
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    manyToOne:
+        battle:
+            targetEntity: Battle
+            inversedBy: outcomes
+            joinColumn:
+                nullable: false
+        soldier:
+            targetEntity: Soldier
+            inversedBy: battleOutcomes
+            joinColumn:
+                nullable: false
+    fields:
+        survived:
+            type: boolean
+            nullable: false
+            options:
+                default: 1
