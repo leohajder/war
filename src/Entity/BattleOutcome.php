@@ -4,6 +4,9 @@ namespace App\Entity;
 
 class BattleOutcome
 {
+    const SURVIVED = 'survived';
+    const DIED = 'died';
+    
     private $id;
 
     private $outcome;

@@ -4,6 +4,9 @@ namespace App\Entity;
 
 class WarOutcome
 {
+    const WON = 'won';
+    const LOST = 'lost';
+    
     private $id;
 
     private $outcome;

@@ -46,76 +46,28 @@ class DefaultController extends AbstractController
             $soldier2 = $this->findLiveSoldier($army2, true);
 
             $result = $this->calculateFight($soldier1, $soldier2);
-            $battleOutcome1 = new BattleOutcome();
-            $battleOutcome2 = new BattleOutcome();
-
             if (0 <= $result) {
-                $battleOutcome1
-                    ->setSoldier($soldier1)
-                    ->setOutcome('survived');
-                $battle->addOutcome($battleOutcome1);
-                $soldier1->setExperience($soldier1->getExperience() + 1);
-
-                $battleOutcome2
-                    ->setSoldier($soldier2)
-                    ->setOutcome('died');
-                $battle->addOutcome($battleOutcome2);
-                $soldier2->setAlive(false);
+                $this->updateBattleOutcome($soldier1, $battle, BattleOutcome::SURVIVED);
+                $this->updateBattleOutcome($soldier2, $battle, BattleOutcome::DIED);
             } else {
-                $battleOutcome1
-                    ->setSoldier($soldier1)
-                    ->setOutcome('died');
-                $soldier1->setAlive(false);
-
-                $battleOutcome2
-                    ->setSoldier($soldier2)
-                    ->setOutcome('survived');
-                $battle->addOutcome($battleOutcome2);
-                $soldier2->setExperience($soldier2->getExperience() + 1);
+                $this->updateBattleOutcome($soldier1, $battle, BattleOutcome::DIED);
+                $this->updateBattleOutcome($soldier2, $battle, BattleOutcome::SURVIVED);
             }
 
-            $this->getDoctrine()->getManager()->persist($soldier1);
-            $this->getDoctrine()->getManager()->persist($soldier2);
-            $this->getDoctrine()->getManager()->persist($battleOutcome1);
-            $this->getDoctrine()->getManager()->persist($battleOutcome2);
-
-            $battle->addOutcome($battleOutcome1);
-            $battle->addOutcome($battleOutcome2);
-
-            $this->getDoctrine()->getManager()->persist($battle);
-
             $war->addBattle($battle);
-            
+            $this->getDoctrine()->getManager()->persist($battle);
+            $this->getDoctrine()->getManager()->persist($war);
             $this->getDoctrine()->getManager()->flush();
         }
 
-        $warOutcome1 = new WarOutcome();
-        $warOutcome2 = new WarOutcome();
         if ($this->findLiveSoldier($army1)) {
-            $warOutcome1
-                ->setArmy($army1)
-                ->setOutcome('won');
-            $war->addOutcome($warOutcome1);
-
-            $warOutcome2
-                ->setArmy($army2)
-                ->setOutcome('lost');
-            $war->addOutcome($warOutcome2);
+            $this->updateWarOutcome($army1, $war, WarOutcome::WON);
+            $this->updateWarOutcome($army2, $war, WarOutcome::LOST);
         } elseif ($this->findLiveSoldier($army2)) {
-            $warOutcome1
-                ->setArmy($army1)
-                ->setOutcome('lost');
-            $war->addOutcome($warOutcome1);
-
-            $warOutcome2
-                ->setArmy($army2)
-                ->setOutcome('won');
-            $war->addOutcome($warOutcome2);
+            $this->updateWarOutcome($army1, $war, WarOutcome::LOST);
+            $this->updateWarOutcome($army2, $war, WarOutcome::WON);
         }
 
-        $this->getDoctrine()->getManager()->persist($warOutcome1);
-        $this->getDoctrine()->getManager()->persist($warOutcome2);
-        $this->getDoctrine()->getManager()->persist($war);
         $this->getDoctrine()->getManager()->flush();
 
         return $this->render('default/index.html.twig', [
@@ -188,5 +140,39 @@ class DefaultController extends AbstractController
     private function getAdrenalineBoost(int $experience)
     {
         return rand(0, $experience / 4) + rand(-2, 2);
+    }
+
+    private function updateBattleOutcome(Soldier $soldier, Battle $battle, string $outcome)
+    {
+        $battleOutcome = new BattleOutcome();
+
+        if ('survived' === $outcome) {
+            $soldier->setExperience($soldier->getExperience() + 1);
+        } elseif ('died' === $outcome) {
+            $soldier->setAlive(false);
+        }
+
+        $battleOutcome
+            ->setSoldier($soldier)
+            ->setOutcome($outcome);
+
+        $battle->addOutcome($battleOutcome);
+
+        $this->getDoctrine()->getManager()->persist($soldier);
+        $this->getDoctrine()->getManager()->persist($battleOutcome);
+        $this->getDoctrine()->getManager()->persist($battle);
+    }
+
+    private function updateWarOutcome(Army $army, War $war, string $outcome)
+    {
+        $warOutcome = new WarOutcome();
+        $warOutcome
+            ->setArmy($army)
+            ->setOutcome($outcome);
+
+        $war->addOutcome($warOutcome);
+
+        $this->getDoctrine()->getManager()->persist($warOutcome);
+        $this->getDoctrine()->getManager()->persist($war);
     }
 }
