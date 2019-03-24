@@ -13,10 +13,13 @@ class War
 
     private $armies;
 
+    private $outcomes;
+
     public function __construct()
     {
         $this->battles = new ArrayCollection();
         $this->armies = new ArrayCollection();
+        $this->outcomes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -80,6 +83,37 @@ class War
             // set the owning side to null (unless already changed)
             if ($army->getWar() === $this) {
                 $army->setWar(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|WarOutcome[]
+     */
+    public function getOutcomes(): Collection
+    {
+        return $this->outcomes;
+    }
+
+    public function addOutcome(WarOutcome $outcome): self
+    {
+        if (!$this->outcomes->contains($outcome)) {
+            $this->outcomes[] = $outcome;
+            $outcome->setWar($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOutcome(WarOutcome $outcome): self
+    {
+        if ($this->outcomes->contains($outcome)) {
+            $this->outcomes->removeElement($outcome);
+            // set the owning side to null (unless already changed)
+            if ($outcome->getWar() === $this) {
+                $outcome->setWar(null);
             }
         }
 

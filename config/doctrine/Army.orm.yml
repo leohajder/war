@@ -17,6 +17,9 @@ App\Entity\Army:
         cannons:
             targetEntity: Cannon
             mappedBy: army
+        warOutcomes:
+            targetEntity: WarOutcome
+            mappedBy: army
     manyToOne:
         war:
             targetEntity: War

@@ -17,10 +17,13 @@ class Army
 
     private $cannons;
 
+    private $warOutcomes;
+
     public function __construct()
     {
         $this->soldiers = new ArrayCollection();
         $this->cannons = new ArrayCollection();
+        $this->warOutcomes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -108,6 +111,37 @@ class Army
             // set the owning side to null (unless already changed)
             if ($cannon->getArmy() === $this) {
                 $cannon->setArmy(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|WarOutcome[]
+     */
+    public function getWarOutcomes(): Collection
+    {
+        return $this->warOutcomes;
+    }
+
+    public function addWarOutcome(WarOutcome $warOutcome): self
+    {
+        if (!$this->warOutcomes->contains($warOutcome)) {
+            $this->warOutcomes[] = $warOutcome;
+            $warOutcome->setArmy($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWarOutcome(WarOutcome $warOutcome): self
+    {
+        if ($this->warOutcomes->contains($warOutcome)) {
+            $this->warOutcomes->removeElement($warOutcome);
+            // set the owning side to null (unless already changed)
+            if ($warOutcome->getArmy() === $this) {
+                $warOutcome->setArmy(null);
             }
         }
 
