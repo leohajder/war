@@ -5,6 +5,11 @@ App\Entity\Army:
             type: integer
             generator:
                 strategy: AUTO
+    fields:
+        tag:
+            type: string
+            length: 50
+            nullable: false
     oneToMany:
         soldiers:
             targetEntity: Soldier
@@ -15,8 +20,3 @@ App\Entity\Army:
             inversedBy: armies
             joinColumn:
                 nullable: false
-    fields:
-        tag:
-            type: string
-            length: 50
-            nullable: false

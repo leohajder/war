@@ -5,6 +5,12 @@ App\Entity\BattleOutcome:
             type: integer
             generator:
                 strategy: AUTO
+    fields:
+        outcome:
+            type: string
+            nullable: false
+            options:
+                default: 'survived'
     manyToOne:
         battle:
             targetEntity: Battle
@@ -16,9 +22,3 @@ App\Entity\BattleOutcome:
             inversedBy: battleOutcomes
             joinColumn:
                 nullable: false
-    fields:
-        outcome:
-            type: string
-            nullable: false
-            options:
-                default: 'survived'

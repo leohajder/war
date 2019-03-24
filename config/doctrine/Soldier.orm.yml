@@ -5,16 +5,6 @@ App\Entity\Soldier:
             type: integer
             generator:
                 strategy: AUTO
-    oneToMany:
-        battleOutcomes:
-            targetEntity: BattleOutcome
-            mappedBy: soldier
-    manyToOne:
-        army:
-            targetEntity: Army
-            inversedBy: soldiers
-            joinColumn:
-                nullable: false
     fields:
         experience:
             type: integer
@@ -26,3 +16,13 @@ App\Entity\Soldier:
             nullable: false
             options:
                 default: 1
+    oneToMany:
+        battleOutcomes:
+            targetEntity: BattleOutcome
+            mappedBy: soldier
+    manyToOne:
+        army:
+            targetEntity: Army
+            inversedBy: soldiers
+            joinColumn:
+                nullable: false
