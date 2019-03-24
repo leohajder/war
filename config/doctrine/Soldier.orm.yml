@@ -1,0 +1,18 @@
+App\Entity\Soldier:
+    type: entity
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        experience:
+            type: integer
+            nullable: false
+            options:
+                default: 0
+        alive:
+            type: boolean
+            nullable: false
+            options:
+                default: 1
