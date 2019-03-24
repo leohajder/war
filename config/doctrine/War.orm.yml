@@ -6,6 +6,9 @@ App\Entity\War:
             generator:
                 strategy: AUTO
     oneToMany:
+        armies:
+                targetEntity: Army
+                mappedBy: war
         battles:
             targetEntity: Battle
             mappedBy: war
