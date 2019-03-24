@@ -58,13 +58,13 @@ class DefaultController extends AbstractController
 
                 $battleOutcome2
                     ->setSoldier($soldier2)
-                    ->setOutcome('killed by soldier');
+                    ->setOutcome('killed');
                 $battle->addOutcome($battleOutcome2);
                 $soldier2->setAlive(false);
             } else {
                 $battleOutcome1
                     ->setSoldier($soldier1)
-                    ->setOutcome( 'killed by soldier');
+                    ->setOutcome('killed');
                 $soldier1->setAlive(false);
 
                 $battleOutcome2
