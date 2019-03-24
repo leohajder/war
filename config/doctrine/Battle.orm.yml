@@ -9,3 +9,5 @@ App\Entity\Battle:
         war:
             targetEntity: War
             inversedBy: battles
+            joinColumn:
+                nullable: false

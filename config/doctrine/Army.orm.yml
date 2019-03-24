@@ -13,6 +13,8 @@ App\Entity\Army:
         war:
             targetEntity: War
             inversedBy: armies
+            joinColumn:
+                nullable: false
     fields:
         tag:
             type: string

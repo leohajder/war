@@ -9,6 +9,8 @@ App\Entity\Soldier:
         army:
             targetEntity: Army
             inversedBy: soldiers
+            joinColumn:
+                nullable: false
     fields:
         experience:
             type: integer
