@@ -131,7 +131,7 @@ class DefaultController extends AbstractController
         for($i = 0; $i < $count; $i++) {
             $soldier = new Soldier();
             $soldier
-                ->setExperience(rand(0, 10))
+                ->setExperience(rand(0, 10) * (rand(1, 2) - rand(0, 1)))
                 ->setAlive(true);
 
             $this->getDoctrine()->getManager()->persist($soldier);
