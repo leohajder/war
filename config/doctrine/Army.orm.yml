@@ -14,9 +14,6 @@ App\Entity\Army:
         soldiers:
             targetEntity: Soldier
             mappedBy: army
-        cannons:
-            targetEntity: Cannon
-            mappedBy: army
         warOutcomes:
             targetEntity: WarOutcome
             mappedBy: army

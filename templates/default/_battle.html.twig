@@ -1,0 +1,5 @@
+{{ 'app.in_battle'|trans|capitalize }} {{ battle.id }}
+{% for outcome in battle.outcomes %}
+    {% include 'default/_battleOutcome.html.twig' with {'outcome': outcome} %}
+    {% if loop.last %}.<br>{% else %}, {% endif %}
+{% endfor %}

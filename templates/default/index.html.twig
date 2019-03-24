@@ -1,7 +1,10 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>index</h1>
-    <p>{{ army1 }}</p>
-    <p>{{ army2 }}</p>
+    {% for outcome in war.outcomes %}
+        {% include 'default/_warOutcome.html.twig' with {'outcome': outcome} %}
+    {% endfor %}
+    {% for battle in war.battles %}
+        {% include 'default/_battle.html.twig' with {'battle': battle} %}
+    {% endfor %}
 {% endblock %}
