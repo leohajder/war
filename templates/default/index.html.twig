@@ -2,6 +2,10 @@
 
 {% block body %}
     <h1>index</h1>
-    {{ dump(warOutcome1) }}
-    {{ dump(warOutcome2) }}
+    {% for outcome in war.outcomes %}
+        {% include 'default/_warOutcome.html.twig' with {'outcome': outcome} %}
+    {% endfor %}
+    {% for battle in war.battles %}
+        {% include 'default/_battle.html.twig' with {'battle': battle} %}
+    {% endfor %}
 {% endblock %}

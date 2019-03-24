@@ -58,13 +58,13 @@ class DefaultController extends AbstractController
 
                 $battleOutcome2
                     ->setSoldier($soldier2)
-                    ->setOutcome('killed');
+                    ->setOutcome('died');
                 $battle->addOutcome($battleOutcome2);
                 $soldier2->setAlive(false);
             } else {
                 $battleOutcome1
                     ->setSoldier($soldier1)
-                    ->setOutcome('killed');
+                    ->setOutcome('died');
                 $soldier1->setAlive(false);
 
                 $battleOutcome2
@@ -94,32 +94,32 @@ class DefaultController extends AbstractController
         if ($this->findLiveSoldier($army1)) {
             $warOutcome1
                 ->setArmy($army1)
-                ->setWar($war)
                 ->setOutcome('won');
+            $war->addOutcome($warOutcome1);
 
             $warOutcome2
                 ->setArmy($army2)
-                ->setWar($war)
                 ->setOutcome('lost');
+            $war->addOutcome($warOutcome2);
         } elseif ($this->findLiveSoldier($army2)) {
             $warOutcome1
                 ->setArmy($army1)
-                ->setWar($war)
                 ->setOutcome('lost');
+            $war->addOutcome($warOutcome1);
 
             $warOutcome2
                 ->setArmy($army2)
-                ->setWar($war)
                 ->setOutcome('won');
+            $war->addOutcome($warOutcome2);
         }
 
         $this->getDoctrine()->getManager()->persist($warOutcome1);
         $this->getDoctrine()->getManager()->persist($warOutcome2);
+        $this->getDoctrine()->getManager()->persist($war);
         $this->getDoctrine()->getManager()->flush();
 
         return $this->render('default/index.html.twig', [
-            'warOutcome1' => $warOutcome1,
-            'warOutcome2' => $warOutcome2,
+            'war' => $war,
         ]);
     }
 
