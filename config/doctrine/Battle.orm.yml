@@ -5,3 +5,7 @@ App\Entity\Battle:
             type: integer
             generator:
                 strategy: AUTO
+    manyToOne:
+        war:
+            targetEntity: War
+            inversedBy: battles
