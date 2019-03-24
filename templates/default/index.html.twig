@@ -1,7 +1,6 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>index</h1>
     {% for outcome in war.outcomes %}
         {% include 'default/_warOutcome.html.twig' with {'outcome': outcome} %}
     {% endfor %}

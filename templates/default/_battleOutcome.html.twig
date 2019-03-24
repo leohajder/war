@@ -1,1 +1,1 @@
-soldier {{ outcome.soldier.id }} form {{ outcome.soldier.army.tag }} {{ outcome.outcome }}
+{{ 'app.soldier'|trans }} {{ outcome.soldier.id }} {{ 'app.from'|trans }} {{ outcome.soldier.army.tag }} {{ ('app.' ~ outcome.outcome)|trans }}
