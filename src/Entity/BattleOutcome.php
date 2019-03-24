@@ -6,7 +6,7 @@ class BattleOutcome
 {
     private $id;
 
-    private $survived;
+    private $outcome;
 
     private $battle;
 
@@ -17,14 +17,14 @@ class BattleOutcome
         return $this->id;
     }
 
-    public function getSurvived(): ?bool
+    public function getOutcome(): ?string
     {
-        return $this->survived;
+        return $this->outcome;
     }
 
-    public function setSurvived(bool $survived): self
+    public function setOutcome(string $outcome): self
     {
-        $this->survived = $survived;
+        $this->outcome = $outcome;
 
         return $this;
     }
