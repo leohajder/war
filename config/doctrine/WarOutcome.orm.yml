@@ -1,0 +1,24 @@
+App\Entity\WarOutcome:
+    type: entity
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        outcome:
+            type: string
+            nullable: false
+            options:
+                default: 'won'
+    manyToOne:
+        war:
+            targetEntity: War
+            inversedBy: outcomes
+            joinColumn:
+                nullable: false
+        army:
+            targetEntity: Army
+            inversedBy: warOutcomes
+            joinColumn:
+                nullable: false

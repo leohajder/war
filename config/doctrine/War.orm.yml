@@ -12,3 +12,6 @@ App\Entity\War:
         battles:
             targetEntity: Battle
             mappedBy: war
+        outcomes:
+            targetEntity: WarOutcome
+            mappedBy: war
