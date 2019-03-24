@@ -1,0 +1,8 @@
+app:
+    won: je pobijedila
+    lost: je izgubila
+    in_battle: u bitci
+    soldier: vojnik
+    from: iz
+    survived: je preživio
+    died: je poginuo

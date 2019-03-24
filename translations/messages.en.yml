@@ -1,0 +1,8 @@
+app:
+    won: won
+    lost: lost
+    in_battle: in battle
+    soldier: soldier
+    from: from
+    survived: survived
+    died: died
