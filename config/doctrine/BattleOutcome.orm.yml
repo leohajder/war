@@ -17,8 +17,8 @@ App\Entity\BattleOutcome:
             joinColumn:
                 nullable: false
     fields:
-        survived:
-            type: boolean
+        outcome:
+            type: string
             nullable: false
             options:
-                default: 1
+                default: 'survived'
