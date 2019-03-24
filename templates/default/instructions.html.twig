@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
-{% block body %}
-    <h1>instructions</h1>
 
-    <a href={{ url('index', {'army1': 5, 'army2': 4}) }}>Click</a>
+{% block body %}
+    <p>{{ 'app.instructions'|trans }}</p>
+    <a href={{ url('index', {'army1': 5, 'army2': 4}) }}>{{ 'app.click_example'|trans|capitalize }}</a>
 {% endblock %}

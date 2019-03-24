@@ -6,3 +6,5 @@ app:
     from: iz
     survived: je preživio
     died: je poginuo
+    click_example: Klikni za primjer
+    instructions: Dodaj parametre army1 i army2 na index url.

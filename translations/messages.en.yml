@@ -6,3 +6,5 @@ app:
     from: from
     survived: survived
     died: died
+    click_example: click to see an example
+    instructions: Add army1 and army2 parameters to the index url.
