@@ -2,19 +2,22 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
-use App\Entity\War;
 use App\Entity\Army;
-use App\Entity\Soldier;
 use App\Entity\Battle;
 use App\Entity\BattleOutcome;
+use App\Entity\Soldier;
+use App\Entity\War;
 use App\Entity\WarOutcome;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends AbstractController
 {
     /**
-     * Displays app index
+     * @param Request $request
+     *
+     * @return Response
      */
     public function index(Request $request)
     {
@@ -27,6 +30,7 @@ class DefaultController extends AbstractController
             return $this->render('default/instructions.html.twig');
         }
 
+        /** @var War $war */
         $war = new War();
         $this->getDoctrine()->getManager()->persist($war);
         $this->getDoctrine()->getManager()->flush();
@@ -40,11 +44,15 @@ class DefaultController extends AbstractController
         $this->getDoctrine()->getManager()->flush();
 
         while ($this->warIsRaging($war)) {
+            /** @var Battle $battle */
             $battle = new Battle();
 
+            /** @var Soldier $soldier1 */
             $soldier1 = $this->findLiveSoldier($army1, true);
+            /** @var Soldier $soldier2 */
             $soldier2 = $this->findLiveSoldier($army2, true);
 
+            /** @var int $result */
             $result = $this->calculateFight($soldier1, $soldier2);
             if (0 <= $result) {
                 $this->updateBattleOutcome($soldier1, $battle, BattleOutcome::SURVIVED);
@@ -75,12 +83,20 @@ class DefaultController extends AbstractController
         ]);
     }
 
+    /**
+     * @param string $tag
+     * @param int $count
+     *
+     * @return Army
+     */
     private function createArmy(string $tag, int $count)
     {
+        /** @var Army $army */
         $army = new Army();
         $army->setTag($tag);
 
         for($i = 0; $i < $count; $i++) {
+            /** @var Soldier $soldier */
             $soldier = new Soldier();
             $soldier
                 ->setExperience(rand(0, 10) * (rand(1, 2) - rand(0, 1)))
@@ -94,6 +110,11 @@ class DefaultController extends AbstractController
         return $army;
     }
 
+    /**
+     * @param War $war
+     *
+     * @return bool
+     */
     private function warIsRaging(War $war)
     {
         foreach ($war->getArmies() as $army) {
@@ -107,6 +128,12 @@ class DefaultController extends AbstractController
         return true;
     }
 
+    /**
+     * @param Army $army
+     * @param bool $random
+     *
+     * @return Soldier
+     */
     private function findLiveSoldier(Army $army, ?bool $random = false) 
     {
         $repository = $this->getDoctrine()->getManager()->getRepository(Soldier::class);
@@ -127,6 +154,12 @@ class DefaultController extends AbstractController
         return null;
     }
 
+    /**
+     * @param Soldier $soldier1
+     * @param Soldier $soldier2
+     *
+     * @return int
+     */
     private function calculateFight(Soldier $soldier1, Soldier $soldier2)
     {
         $exp1 = $soldier1->getExperience();
@@ -137,18 +170,29 @@ class DefaultController extends AbstractController
         return $exp1 - $exp2;
     }
 
+    /**
+     * @param int $experience
+     *
+     * @return int
+     */
     private function getAdrenalineBoost(int $experience)
     {
         return rand(0, $experience / 4) + rand(-2, 2);
     }
 
+    /**
+     * @param Soldier $soldier
+     * @param Battle $battle
+     * @param string $outcome
+     */
     private function updateBattleOutcome(Soldier $soldier, Battle $battle, string $outcome)
     {
+        /** @var BattleOutcome $battleOutcome */
         $battleOutcome = new BattleOutcome();
 
-        if ('survived' === $outcome) {
+        if (BattleOutcome::SURVIVED === $outcome) {
             $soldier->setExperience($soldier->getExperience() + 1);
-        } elseif ('died' === $outcome) {
+        } elseif (BattleOutcome::DIED === $outcome) {
             $soldier->setAlive(false);
         }
 
@@ -163,8 +207,14 @@ class DefaultController extends AbstractController
         $this->getDoctrine()->getManager()->persist($battle);
     }
 
+    /**
+     * @param Army $army
+     * @param War $war
+     * @param string $outcome
+     */
     private function updateWarOutcome(Army $army, War $war, string $outcome)
     {
+        /** @var WarOutcome $warOutcome */
         $warOutcome = new WarOutcome();
         $warOutcome
             ->setArmy($army)
